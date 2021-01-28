@@ -1,0 +1,120 @@
+﻿<div class="container-fluid">
+
+    <div class="wrapper wrapper-content">
+
+        <div class="row row-wsUnder">
+            <div class="col-xs-3 col-xs-offset-9">
+                <button class="btn btn-primary pull-right" ui-sref="lotteryReconciliation.createLotteryReconciliation.create" translate>
+                    Create Lottery Reconciliation
+                </button>
+            </div>
+        </div>
+
+        <div class="ibox">
+            <div class="ibox-content" style="min-height: 500px;">
+                <div class="row col-md-12" style="border-bottom: none;">
+                    <h3 class="form-header" translate>Search for Lottery Reconciliations</h3>
+                </div>
+
+                <form formgroup="myform" class="form-horizontal" role="form">
+
+                    <!-- **************** -->
+                    <div class="form-group value">
+                        <label class="col-xs-3 control-label force-right" for="dateFrom" translate>
+                            Reconciliation Date from
+                        </label>
+                        <div class="col-xs-3">
+                            <p class="input-group p-group-format">
+                                <input class="form-control" type="text" id="dateFrom" ng-click="open1($event,'opened1')"
+                                    is-open="opened1" max-date="maxDate" placeholder="{{'dd/mm/yyyy' | translate}}"
+                                    datepicker-options="dateOptions" ng-required="false" datepicker-popup="{{format}}"
+                                    ng-model="vm.from" current-text="{{'Today'| translate}}"
+                                    toggle-weeks-text="{{'Weeks'| translate}}" clear-text="{{'Clear'| translate}}"
+                                    close-text="{{'Close'| translate}}" ng-change="vm.logicalDates(vm.from, vm.to)" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-standard" ng-click="open1($event)">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            <div class="value form-group pull-left" ng-if="!vm.logicalDatesBool"
+                                style="margin-left: 2rem;">
+                                <div class="note note-error" translate>'From' date should preceed 'to' date</div>
+                            </div>
+                            </p>
+                        </div>
+
+                        <label class="col-xs-1 middleLabel" for="dateUntil" translate>to</label>
+
+                        <div class="col-xs-3">
+                            <p class="input-group p-group-format">
+                                <input class="form-control" type="text" name="dt2" id="dateUntil"
+                                    ng-click="open2($event, 'opened2')" is-open="opened2" max-date="maxDate"
+                                    placeholder="{{'dd/mm/yyyy' | translate}}" datepicker-options="dateOptions"
+                                    ng-required="false" datepicker-popup="{{format}}" ng-model="vm.to"
+                                    current-text="{{'Today'| translate}}" toggle-weeks-text="{{'Weeks'| translate}}"
+                                    clear-text="{{'Clear'| translate}}" close-text="{{'Close'| translate}}"
+                                    ng-change="vm.logicalDates(vm.from, vm.to)" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-standard" ng-click="open2($event)">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+
+                            </p>
+                        </div>
+
+                    </div><!-- form group -->
+
+                    <div class="form-group">
+                        <div class="col-xs-6 col-xs-offset-3">
+                            <button class="btn btn-primary" type="submit" ng-model="vm.checked"
+                                ng-click="vm.searchLotteries(data)" translate ng-disabled="!vm.logicalDatesBool">
+                                Search
+                            </button>
+                        </div>
+                    </div><!-- form group -->
+
+                </form>
+
+            </div><!-- @ibox cont -->
+        </div><!-- @ibox -->
+        <!-- *************** list applications *************** -->
+        <div class="ibox check-element animate-show" style="margin-bottom: 13rem;">
+            <div class="ibox-content">
+
+                <div class="table table-striped table-responsive">
+                    <h4 class="text-left strong" translate>Search results</h4>
+                    <div class="row row-table-header">
+                        <div class="col-xs-2" translate>Reconciliation Date</div>
+                        <div class="col-xs-1" translate>Online Prizes</div>
+                        <div class="col-xs-1" ng-if="isManager" translate>System Online Prizes</div>
+                        <div class="col-xs-1" ng-if="isManager" translate>Online Prizes Diff</div>
+                        <div class="col-xs-1" translate>Online Sales</div>
+                        <div class="col-xs-1" ng-if="isManager" translate>System Online Sales</div>
+                        <div class="col-xs-1" ng-if="isManager" translate>Online Sales Diff</div>
+                        <div class="col-xs-1" translate>Card Prizes</div>
+                        <div class="col-xs-1" ng-if="isManager" translate>System Card Prizes</div>
+                        <div class="col-xs-1" ng-if="isManager" translate>Card Prizes Diff</div>
+                        <div class="col-xs-1" translate>Stock Variance</div>
+                        <!-- <div class="col-xs-1" translate>Processed date</div>
+                        <div class="col-xs-2 text-right" translate>Action</div> -->
+                    </div>
+                    <div class="row row-table" ng-repeat="result in vm.lotteries| orderBy: '-Period' ">
+                        <div class="col-xs-2">{{result.Period | date: 'dd/MM/yyyy'}}</div>
+                        <div class="col-xs-1">{{result.OnlineWinningsCountedmount}}</div>
+                        <div class="col-xs-1" ng-s='isManager'>{{result.OnlineWinningsSystemAmount}}</div>
+                        <div class="col-xs-1" ng-if='isManager'>{{result.OnlineWinningsDeviationsAmount}}</div>
+                        <div class="col-xs-1">{{result.OnlineSalesCountedmount}}</div>
+                        <div class="col-xs-1" ng-if='isManager'>{{result.OnlineSalesSystemAmount}}</div>
+                        <div class="col-xs-1" ng-if='isManager'>{{result.OnlineSalesDeviationsAmount}}</div>
+                        <div class="col-xs-1">{{result.ScratchCardPricesCountedmount}}</div>
+                        <div class="col-xs-1" ng-if='isManager'>{{result.ScratchCardPricesSystemAmount}}</div>
+                        <div class="col-xs-1" ng-if='isManager'>{{result.ScratchCardPricesDeviationsAmount}}</div>     
+                        <div class="col-xs-1">{{result.StockVariance}}</div>
+                    </div>
+                </div><!-- @table/responsive -->
+            </div><!-- @ibox-cont -->
+        </div><!-- @ibox -->
+    </div><!-- @wrapper -->
+
+</div>

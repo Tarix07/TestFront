@@ -1,0 +1,141 @@
+﻿@brand-primary: darken(#428bca, 6.5%); // #337ab7
+
+/* ++++++++++++++++++++++++++++++++++++++++++ */
+@sectionBorders: #aaa;
+
+/* dark grey */
+.strong {
+    font-weight: bold;
+}
+
+/* ****************************************** */
+
+/* add whitespace under rows*/
+.row-wsUnder {
+    margin-bottom: 10px;
+}
+
+.form-header {
+    margin-bottom: 1.5em;
+}
+
+/* remove the padding from form param elems, keep input in line 
+*  with rest of form */
+p.p-group-format {
+    padding-left: 0 !important;
+}
+
+/* this is a label between 2 datepickers */
+.middleLabel {
+    margin-right: -59px;
+    margin-left : -40px;
+}
+
+/* adds some whitespace between buttons (create.html) */
+.spaceOut {
+    margin-top: 25px;
+
+    .btn {
+        margin-right: 1em;
+    }
+}
+
+.table-responsive {
+    overflow: hidden;
+}
+
+.radio-inline {
+    display  : inline-block;
+    min-width: 210px;
+}
+
+.radio label.radio-btn-xtra-pad {
+    padding-left : 30px;
+    margin-bottom: 15px;
+}
+
+/* white btn grey outline / createApplication */
+.btn-vanilla {
+    border       : 1px solid #c2c2c2;
+    border-radius: 3px;
+}
+
+.display-info input,
+.display-info textarea {
+    color: #222;
+}
+
+// removes outlines on input elements that are disabled/readonly
+.input-borders {
+    border-color: #fff;
+    border      : none;
+}
+
+.display-info div {
+    input {
+        .input-borders
+    }
+
+    input:focus {
+        .input-borders
+    }
+
+    input:active {
+        .input-borders
+    }
+}
+
+hr.hrDivider {
+    margin-bottom: 15px;
+}
+
+h4,
+h3 {
+    margin-left: 1em;
+}
+
+/* limit length of group list (they are v.long) */
+.group-list {
+    height    : 250px;
+    max-height: 250px;
+    overflow  : scroll;
+}
+
+.search-list .article-list-container {
+    height: 300px;
+}
+
+.input-restrict-size {
+    margin-left: 40px;
+}
+
+.divForm-fix {
+    font-weight     : 600;
+    /*color         : #333;
+    background-color:#fff;*/
+    border          : none;
+    margin-top      : 7px;
+}
+
+.tighter-errors {
+    margin-top : -15px;
+    padding-top: 0;
+}
+
+label.force-right span {
+    float: right;
+}
+
+.article-application-table {
+    border-style: none;
+}
+
+.form-box {
+    padding: 15px;
+}
+
+/* toggle for layout */
+/*div[class^="col-xs"] { outline: 1px dotted #00ff21; }*/
+/*div[class^="key"] { outline: 1px dashed #0094ff; }*/
+/*div[class^="value"] { outline: 1px solid #b48484; }*/
+/*label[class^="col-xs"] {outline: 1px dashed #00ffff; } */

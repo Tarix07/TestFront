@@ -1,0 +1,168 @@
+﻿<div class="container-fluid">
+    <div class="ibox">
+        <div class="ibox-content" style="min-height: 500px;">
+
+            <div class="row">
+                <button class="btn btn-primary pull-right" style="margin-right:1.5em;"
+                    ui-sref="lotteryReconciliation.startpage" translate>
+                    Back
+                </button>
+            </div>
+
+            <div>
+
+                <form id="application-details-form" class="form" role="form" name="applicationDetailsForm" novalidate
+                    ng-model-options="{ debounce: {'default' :300}}" ng-cloak>
+                    <div class="ibox">
+                        <div class="ibox-content key-value-rows">
+
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <h5 translate>Lottert Reconciliation Details</h5>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group value">
+                                    <label class="col-xs-1 control-label force-right key" for="period" translate>
+                                        Reconciliation Date*
+                                    </label>
+                                    <div class="col-xs-3">
+                                        <p class="input-group p-group-format">
+                                            <input class="form-control" type="text" id="dateFrom"
+                                                ng-click="open1($event,'opened1')" is-open="opened1" max-date="maxDate"
+                                                min-date="minDate" placeholder="{{'dd/mm/yyyy' | translate}}"
+                                                datepicker-options="dateOptions" ng-required="false"
+                                                datepicker-popup="{{format}}" ng-model="vm.period"
+                                                current-text="{{'Today'| translate}}"
+                                                toggle-weeks-text="{{'Weeks'| translate}}"
+                                                clear-text="{{'Clear'| translate}}" close-text="{{'Close'| translate}}"
+                                                ng-change="vm.searchLotteryPerDay()" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-standard" ng-click="open1($event)">
+                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table" ng-if='vm.period'>
+                                <div class="row row-table-header">
+                                    <div class="col-xs-2" translate>Unit</div>
+                                    <div class="col-xs-2" ng-hide="isManager" translate>System Amount</div>
+                                    <div class="col-xs-2" translate>Amount</div>
+                                    <div class="col-xs-2" ng-if="isManager" translate>Amount Diff</div>
+                                </div>
+
+
+                                <div class="row row-table">
+                                    <div class="col-xs-2" translate>Online Prizes*</div>
+                                    <div class="col-xs-2" ng-if="isManager">{{result.OnlineWinningsSystemAmount}}</div>
+                                    <div class="col-xs-2">
+                                        <input id="txtAmount" class="form-control" type="number" name="onlinePrizes"
+                                            step="any" ng-change="vm.validateAmount('onlinePrizes', 'onlinePrizes')"
+                                            ng-model="vm.lottery.onlinePrizes" ng-disabled="vm.status" required
+                                            value="0.0"/>
+                                        <span id="helpBlock" class="help-block" translate>Use numbers (eg. 5,
+                                            12.5)</span>
+                                    </div>
+                                    <!-- <div class="value form-group pull-right"
+                                        ng-hide="lotteryReconciliationForm.onlinePrizes.$untouched">
+                                        <span class="note note-error"
+                                            ng-show="lotteryReconciliationForm.onlinePrizes.$error.required"
+                                            ng-hide="lotteryReconciliationForm.onlinePrizes.$dirty" translate>
+                                            This field is required
+                                        </span>
+                                    </div> -->
+                                    <div class="col-xs-2" ng-if="isManager">{{result.OnlineWinningsDeviationsAmount}}
+                                    </div>
+                                </div>
+
+                                <div class="row row-table">
+                                    <div class="col-xs-2" translate>Online Sales*</div>
+                                    <div class="col-xs-2" ng-if="isManager">{{result.OnlineSalesSystemAmount}}</div>
+                                    <div class="col-xs-2">
+                                        <input id="txtAmount" class="form-control" type="number" name="onlineSales"
+                                            step="any" ng-change="vm.validateAmount('onlineSales', 'onlineSales')"
+                                            ng-model="vm.lottery.onlineSales" ng-disabled="vm.status" required
+                                            value="0"/>
+                                        <span id="helpBlock" class="help-block" translate>Use numbers (eg. 5,
+                                            12.5)</span>
+                                    </div>
+                                    <!-- <div class="value form-group pull-right"
+                                        ng-hide="lotteryReconciliationForm.onlineSales.$untouched">
+                                        <span class="note note-error"
+                                            ng-show="lotteryReconciliationForm.onlineSales.$error.required"
+                                            ng-hide="lotteryReconciliationForm.onlineSales.$dirty" translate>
+                                            This field is required
+                                        </span>
+                                    </div> -->
+                                    <div class="col-xs-2" ng-if="isManager">{{result.OnlineSalesDeviationsAmount}}</div>
+                                </div>
+
+                                <div class="row row-table">
+                                    <div class="col-xs-2" translate>Scratch Card Prizes*</div>
+                                    <div class="col-xs-2" ng-if="isManager">{{result.ScratchCardPricesSystemAmount}}
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input id="txtAmount" class="form-control" type="number" name="cardPrizes"
+                                            step="any" ng-change="vm.validateAmount('cardPrizes', 'cardPrizes')"
+                                            ng-model="vm.lottery.cardPrizes" ng-disabled="vm.status" required
+                                            value="0" />
+                                        <span id="helpBlock" class="help-block" translate>Use numbers (eg. 5,
+                                            12.5)</span>
+                                    </div>
+                                    <!-- <div class="value form-group pull-right"
+                                        ng-hide="lotteryReconciliationForm.cardPrizes.$untouched">
+                                        <span class="note note-error"
+                                            ng-show="lotteryReconciliationForm.cardPrizes.$error.required"
+                                            ng-hide="lotteryReconciliationForm.cardPrizes.$dirty" translate>
+                                            This field is required
+                                        </span>
+                                    </div> -->
+                                    <div class="col-xs-2" ng-if="isManager">{{result.ScratchCardPricesDeviationsAmount}}
+                                    </div>
+                                </div>
+
+                                <div class="row row-table">
+                                    <div class="col-xs-2" translate>Stock Variance*</div>
+                                    <div class="col-xs-2" ng-if="isManager">&nbsp;</div>
+                                    <div class="col-xs-2">
+                                        <input id="txtAmount" class="form-control" type="number" name="stockVariance"
+                                            step="any" ng-change="vm.validateAmount('stockVariance', 'stockVariance')"
+                                            ng-model="vm.lottery.stockVariance" ng-disabled="vm.status" required
+                                            value="0"/>
+                                        <span id="helpBlock" class="help-block" translate>Use numbers (eg. 5,
+                                            12.5)</span>
+                                    </div>
+                                    <!-- <div class="value form-group pull-right"
+                                        ng-hide="lotteryReconciliationForm.stockVariance.$untouched">
+                                        <span class="note note-error"
+                                            ng-show="lotteryReconciliationForm.stockVariance.$error.required"
+                                            ng-hide="lotteryReconciliationForm.stockVariance.$dirty" translate>
+                                            This field is required
+                                        </span>
+                                    </div> -->
+                                </div>
+
+                                <div class="row">
+                                    <div class="key">&nbsp;</div>
+                                    <div class="value form-group">
+                                        <button class="btn btn-success" ng-disabled="lotteryReconciliationForm.$invalid"
+                                            ng-click="vm.confirmSendApplication()" translate>
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
